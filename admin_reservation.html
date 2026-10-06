@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+    <title>예약 관리 | 월촌캠핑장</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="admin-sidebar"></aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>예약 관리</h1>
+                <p>Supabase에 저장된 예약 내역을 확인하고 상태를 관리합니다.</p>
+            </div>
+
+            <section class="admin-card-grid">
+                <div class="admin-card">
+                    <h3>전체 예약</h3>
+                    <div class="count" id="reservation-total-count">0</div>
+                </div>
+
+                <div class="admin-card">
+                    <h3>결제대기</h3>
+                    <div class="count" id="reservation-waiting-count">0</div>
+                </div>
+
+                <div class="admin-card">
+                    <h3>예약완료</h3>
+                    <div class="count" id="reservation-complete-count">0</div>
+                </div>
+            </section>
+
+            <section class="admin-panel">
+                <h2>예약 정리 도구</h2>
+
+                <div class="admin-tool-row">
+                    <button type="button" class="btn btn-primary" onclick="window.ReservationAdmin.cleanExpiredReservations()">
+                        3시간 지난 결제대기 자동취소 처리
+                    </button>
+
+                    <button type="button" class="btn btn-outline" onclick="window.ReservationAdmin.clearCancelledReservations()">
+                        취소된 예약 기록 삭제
+                    </button>
+
+                    <button type="button" class="btn btn-outline danger" onclick="window.ReservationAdmin.clearAllReservations()">
+                        전체 예약 데이터 초기화
+                    </button>
+                </div>
+
+                <p class="admin-help-text">
+                    ※ 예약을 삭제하거나 취소 처리하면 해당 날짜/구역은 다시 예약 가능 상태로 변경됩니다.
+                </p>
+            </section>
+
+            <section class="admin-panel">
+                <h2>예약 목록</h2>
+
+                <div class="admin-filter-row">
+                    <select id="reservation-status-filter">
+                        <option value="전체">전체</option>
+                        <option value="결제대기">결제대기</option>
+                        <option value="예약완료">예약완료</option>
+                        <option value="취소됨">취소됨</option>
+                        <option value="자동취소">자동취소</option>
+                    </select>
+
+                    <input type="text" id="reservation-search-input" placeholder="예약자명, 전화번호, 구역 검색">
+                </div>
+
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width:70px;">번호</th>
+                                <th style="width:110px;">상태</th>
+                                <th style="width:120px;">예약자</th>
+                                <th style="width:140px;">연락처</th>
+                                <th>날짜</th>
+                                <th style="width:90px;">구역</th>
+                                <th style="width:90px;">인원</th>
+                                <th style="width:110px;">금액</th>
+                                <th style="width:120px;">차량</th>
+                                <th style="width:180px;">요청사항</th>
+                                <th style="width:210px;">관리</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-reservation-list">
+                            <tr>
+                                <td colspan="11">예약 목록을 불러오는 중입니다.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Supabase 연결과 관리자 인증을 먼저 준비한 뒤 관리 기능을 실행합니다. -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin-layout.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /admin_login.html
+Disallow: /admin_dashboard.html
+Disallow: /admin_notice.html
+Disallow: /admin_qna.html
+Disallow: /admin_faq.html
+Disallow: /admin_reservation.html
+
+Sitemap: https://wolchoncamping.co.kr/sitemap.xml

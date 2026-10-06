@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+    <title>예약 확인 / 취소 | 월촌캠핑장</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header id="header">
+        <div id="gnb">
+            <div class="wrap">
+                <div class="logo">
+                    <a href="index.html">🏕️ 월촌<span>캠핑장</span></a>
+                </div>
+                <nav id="main-nav">
+                    <button id="btn-menu-close">✕</button>
+                    <ul>
+                        <li>
+                            <a href="introduce.html">캠핑장 소개</a>
+                            <ul class="dropdown">
+                                <li><a href="introduce.html">인사말</a></li>
+                                <li><a href="rules.html">이용 수칙</a></li>
+                                <li><a href="map.html">오시는 길</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="facility.html">캠핑장 둘러보기</a>
+                            <ul class="dropdown">
+                                <li><a href="facility.html">시설 안내</a></li>
+                                <li><a href="sites.html">구역별 자리 안내</a></li>
+                                <!-- <li><a href="news.html">월촌의 소식('가칭')</a></li> -->
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="rates.html">캠핑장 예약</a>
+                            <ul class="dropdown">
+                                <li><a href="rates.html">예약 / 요금 안내</a></li>
+                                <li><a href="reservation.html">실시간 예약</a></li>
+                                <li><a href="confirm.html">예약 확인 / 취소</a></li>
+                                <li><a href="refund.html">환불규정 / 유의사항</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="notice.html">커뮤니티</a>
+                            <ul class="dropdown">
+                                <li><a href="notice.html">공지사항</a></li>
+                                <li><a href="faq.html">자주 묻는 질문</a></li>
+                                <li><a href="contact.html">문의하기</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="btn-menu">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-visual" style="
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/high.jpg'); 
+    background-size: cover; 
+    background-position: 50% 63%;">
+        <div class="wrap">
+            <h2>예약 확인 / 취소</h2>
+            <p>예약 정보를 확인하고 필요 시 취소할 수 있습니다.</p>
+        </div>
+    </section>
+
+    <div class="breadcrumb">
+        <div class="wrap">
+            <a href="index.html">HOME</a> <span>&gt;</span> 캠핑장 예약 <span>&gt;</span> <strong>예약 확인 / 취소</strong>
+        </div>
+    </div>
+
+    <main class="section">
+        <div class="wrap">
+
+            <div class="section-title">
+                <h2>Reservation Confirm</h2>
+                <p>예약자명과 연락처를 입력하여 예약 내역을 확인해 주세요.</p>
+                <div class="line"></div>
+            </div>
+
+            <div style="
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+        ">
+
+                <!-- 조회 안내 -->
+                <div style="
+                margin-bottom: 30px;
+                padding: 18px 20px;
+                background: var(--gray-light);
+                border-radius: 8px;
+                color: var(--text-light);
+                font-size: 14px;
+                line-height: 1.7;
+                word-break: keep-all;
+            ">
+                    예약할 때 입력한 <strong style="color:var(--primary-dark);">예약자명과 연락처</strong>를
+                    동일하게 입력해 주세요.
+                </div>
+
+
+                <!-- 예약자 정보 입력 -->
+                <div class="input-grid">
+
+                    <div>
+                        <label for="check-name" style="
+                        display: block;
+                        margin-bottom: 8px;
+                        font-weight: 700;
+                    ">
+                            예약자명
+                        </label>
+
+                        <input type="text" id="check-name" maxlength="30" autocomplete="name"
+                            placeholder="예약자 성함을 입력해 주세요." style="
+                               width: 100%;
+                               padding: 14px;
+                               border: 1px solid #ddd;
+                               border-radius: 6px;
+                           ">
+                    </div>
+
+
+                    <div>
+                        <label for="check-phone" style="
+                        display: block;
+                        margin-bottom: 8px;
+                        font-weight: 700;
+                    ">
+                            휴대폰 번호
+                        </label>
+
+                        <input type="tel" id="check-phone" maxlength="20" autocomplete="tel" placeholder="010-0000-0000"
+                            style="
+                               width: 100%;
+                               padding: 14px;
+                               border: 1px solid #ddd;
+                               border-radius: 6px;
+                           ">
+                    </div>
+
+                </div>
+
+
+                <!-- 조회 버튼 -->
+                <div style="
+                display: flex;
+                justify-content: center;
+                margin-top: 30px;
+            ">
+                    <button type="button" id="btn-check-res" class="btn btn-primary" style="
+                            width: 100%;
+                            max-width: 320px;
+                        ">
+                        예약 확인
+                    </button>
+                </div>
+
+
+                <!-- 예약 조회 결과 -->
+                <div id="confirm-result" style="
+                     display: none;
+                     margin-top: 40px;
+                     padding-top: 30px;
+                     border-top: 2px dashed #eee;
+                 ">
+
+                    <h3 style="
+                    margin-bottom: 20px;
+                    color: var(--primary);
+                    font-size: 19px;
+                ">
+                        🏕️ 예약 내역
+                    </h3>
+
+                    <!-- main.js에서 예약 정보가 들어오는 영역 -->
+                    <div id="res-list-container"></div>
+
+
+                    <!-- 취소 안내 -->
+                    <div style="
+                    margin-top: 25px;
+                    padding: 18px;
+                    background: #fff5f5;
+                    border: 1px solid #fbd5d5;
+                    border-radius: 8px;
+                    color: #c81e1e;
+                    text-align: center;
+                    font-size: 14px;
+                    line-height: 1.7;
+                    word-break: keep-all;
+                ">
+                        <p style="margin:0;">
+                            입금 전 결제대기 예약은 홈페이지에서 직접 취소할 수 있습니다.
+                        </p>
+
+                        <p style="margin:4px 0 0;">
+                            입금 후 예약 취소 및 변경은
+                            <strong>010-3831-0330</strong>으로 문의해 주세요.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="wrap">
+            <div id="footer-top">
+                <div>
+                    <div class="footer-logo">🏕️ 월촌<span>캠핑장</span></div>
+                    <div class="footer-info">
+                        <p>상호 : 월촌캠핑장 </p>
+                        <p>농업회사법인 주식회사 대웅영농산업개발 대표 : 김순용</p>
+                        <p>주소 : 경상남도 함안군 군복면 월촌3길 71-13 (군북면 월촌리 1365-2)</p>
+                        <p>사업자번호 : 224-81-68264</p>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <h4>문의 및 예약</h4>
+                    <div class="phone">010-3831-0330</div>
+                    <p>상담시간 : 09:00 ~ 18:00</p>
+                </div>
+            </div>
+            <div id="footer-bottom">
+                <p>Copyright © 2026 월촌캠핑장. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

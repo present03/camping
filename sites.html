@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+    <title>구역별 자리 안내 | 월촌캠핑장</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 사이트 안내 페이지 전용 추가 스타일 (필요시 style.css에 합치셔도 됩니다) */
+        .tab-menu {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .site-info-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .site-spec {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        .site-spec table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .site-spec th,
+        .site-spec td {
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f5;
+            text-align: left;
+        }
+
+        .site-spec th {
+            width: 100px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+            .site-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <div id="gnb">
+            <div class="wrap">
+                <div class="logo">
+                    <a href="index.html">🏕️ 월촌<span>캠핑장</span></a>
+                </div>
+                <nav id="main-nav">
+                    <button id="btn-menu-close">✕</button>
+                    <ul>
+                        <li>
+                            <a href="introduce.html">캠핑장 소개</a>
+                            <ul class="dropdown">
+                                <li><a href="introduce.html">인사말</a></li>
+                                <li><a href="rules.html">이용 수칙</a></li>
+                                <li><a href="map.html">오시는 길</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="facility.html">캠핑장 둘러보기</a>
+                            <ul class="dropdown">
+                                <li><a href="facility.html">시설 안내</a></li>
+                                <li><a href="sites.html">구역별 자리 안내</a></li>
+                                <!-- <li><a href="news.html">월촌의 소식('가칭')</a></li> -->
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="rates.html">캠핑장 예약</a>
+                            <ul class="dropdown">
+                                <li><a href="rates.html">예약 / 요금 안내</a></li>
+                                <li><a href="reservation.html">실시간 예약</a></li>
+                                <li><a href="confirm.html">예약 확인 / 취소</a></li>
+                                <li><a href="refund.html">환불규정 / 유의사항</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="notice.html">커뮤니티</a>
+                            <ul class="dropdown">
+                                <li><a href="notice.html">공지사항</a></li>
+                                <li><a href="faq.html">자주 묻는 질문</a></li>
+                                <li><a href="contact.html">문의하기</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="btn-menu">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-visual" style="
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/high.jpg'); 
+    background-size: cover; 
+    background-position: 50% 63%;">
+        <div class="wrap">
+            <h2>구역별 자리 소개</h2>
+            <p>월촌캠핑장의 다양한 사이트를 확인해 보세요.</p>
+        </div>
+    </section>
+    <!-- 백워드 부분 -->
+    <div class="breadcrumb">
+        <div class="wrap">
+            <a href="index.html">HOME</a> <span>&gt;</span> 캠핑장 둘러보기 <span>&gt;</span> <strong>구역별 자리 소개</strong>
+        </div>
+    </div>
+
+    <main class="section">
+        <div class="wrap tab-wrap">
+
+            <div class="section-title">
+                <h2>Camping Sites</h2>
+                <p>월촌캠핑장의 사이트 위치와 종류를 확인해 보세요.</p>
+                <div class="line"></div>
+            </div>
+
+            <!-- 탭 메뉴 -->
+            <div class="tab-menu">
+                <button type="button" class="tab-btn active" data-tab="tab-map">
+                    전체 배치도
+                </button>
+
+                <button type="button" class="tab-btn" data-tab="tab-auto">
+                    오토사이트
+                </button>
+
+                <button type="button" class="tab-btn" data-tab="tab-general">
+                    일반사이트
+                </button>
+            </div>
+
+
+            <!-- 전체 배치도 -->
+            <div id="tab-map" class="tab-content active">
+
+                <div style="
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 15px;
+                background: #f8f8f5;
+                border: 1px solid #eeeeea;
+                border-radius: 15px;
+                text-align: center;
+            ">
+                    <a href="images/sites.jpg" target="_blank" rel="noopener" style="display: block; line-height: 0;">
+
+                        <img src="images/sites.jpg" alt="월촌캠핑장 전체 사이트 안내도" style="
+                            display: block;
+                            width: 100%;
+                            height: auto;
+                            margin: 0 auto;
+                            border-radius: 10px;
+                         ">
+                    </a>
+                </div>
+
+                <p style="
+                margin-top: 15px;
+                color: var(--text-light);
+                text-align: center;
+                line-height: 1.7;
+                word-break: keep-all;
+            ">
+                    안내도를 누르면 원본 크기로 크게 확인할 수 있습니다.<br>
+                    별표는 콘센트 위치를 나타냅니다.
+                </p>
+
+            </div>
+
+
+            <!-- 오토사이트 -->
+            <div id="tab-auto" class="tab-content">
+
+                <div class="site-info-grid">
+
+                    <!-- 나중에 오토사이트 사진을 넣을 자리 -->
+                    <div class="site-image" style="
+                    min-height: 400px;
+                    background: #eeeeea;
+                    border-radius: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #888;
+                    text-align: center;
+                ">
+                        <div>
+                            <p style="font-size: 20px; font-weight: 600;">
+                                오토사이트 사진
+                            </p>
+                            <p style="margin-top: 8px;">
+                                추후 대표 사진을 추가해 주세요.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="site-spec">
+
+                        <h3 style="
+                        margin-bottom: 20px;
+                        color: var(--primary);
+                    ">
+                            오토사이트
+                        </h3>
+
+                        <table>
+                            <tr>
+                                <th>사이트 수</th>
+                                <td>총 11개</td>
+                            </tr>
+
+                            <tr>
+                                <th>사이트 번호</th>
+                                <td>오토1 ~ 오토11</td>
+                            </tr>
+
+                            <tr>
+                                <th>주차 방식</th>
+                                <td>사이트 내 차량 주차</td>
+                            </tr>
+
+                            <tr>
+                                <th>전기 사용</th>
+                                <td>안내도에 표시된 콘센트 이용</td>
+                            </tr>
+
+                            <!-- 실제 설명을 받으면 아래 내용을 수정하면 됩니다. -->
+                            <tr>
+                                <th>상세 안내</th>
+                                <td>
+                                    오토사이트의 크기, 바닥 재질 및 특징은
+                                    추후 안내될 예정입니다.
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 일반사이트 -->
+            <div id="tab-general" class="tab-content">
+
+                <div class="site-info-grid">
+
+                    <!-- 나중에 일반사이트 사진을 넣을 자리 -->
+                    <div class="site-image" style="
+                    min-height: 400px;
+                    background: #eeeeea;
+                    border-radius: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #888;
+                    text-align: center;
+                ">
+                        <div>
+                            <p style="font-size: 20px; font-weight: 600;">
+                                일반사이트 사진
+                            </p>
+                            <p style="margin-top: 8px;">
+                                추후 대표 사진을 추가해 주세요.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="site-spec">
+
+                        <h3 style="
+                        margin-bottom: 20px;
+                        color: var(--accent);
+                    ">
+                            일반사이트
+                        </h3>
+
+                        <table>
+                            <tr>
+                                <th>사이트 수</th>
+                                <td>총 3개</td>
+                            </tr>
+
+                            <tr>
+                                <th>사이트 번호</th>
+                                <td>일반1 ~ 일반3</td>
+                            </tr>
+
+                            <tr>
+                                <th>주차 방식</th>
+                                <td>지정 주차장 이용</td>
+                            </tr>
+
+                            <tr>
+                                <th>전기 사용</th>
+                                <td>안내도에 표시된 콘센트 이용</td>
+                            </tr>
+
+                            <!-- 실제 설명을 받으면 아래 내용을 수정하면 됩니다. -->
+                            <tr>
+                                <th>상세 안내</th>
+                                <td>
+                                    일반사이트의 크기, 바닥 재질 및 특징은
+                                    추후 안내될 예정입니다.
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="wrap">
+            <div id="footer-top">
+                <div>
+                    <div class="footer-logo">🏕️ 월촌<span>캠핑장</span></div>
+                    <div class="footer-info">
+                        <p>상호 : 월촌캠핑장 </p>
+                        <p>농업회사법인 주식회사 대웅영농산업개발 대표 : 김순용</p>
+                        <p>주소 : 경상남도 함안군 군복면 월촌3길 71-13 (군북면 월촌리 1365-2)</p>
+                        <p>사업자번호 : 224-81-68264</p>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <h4>문의 및 예약</h4>
+                    <div class="phone">010-3831-0330</div>
+                    <p>상담시간 : 09:00 ~ 18:00</p>
+                </div>
+            </div>
+            <div id="footer-bottom">
+                <p>Copyright © 2026 월촌캠핑장. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+    <title>예약 결제 안내 | 월촌캠핑장</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
+</head>
+
+<body>
+
+    <header id="header">
+        <div id="gnb">
+            <div class="wrap">
+                <div class="logo">
+                    <a href="index.html">🏕️ 월촌<span>캠핑장</span></a>
+                </div>
+                <nav id="main-nav">
+                    <button id="btn-menu-close">✕</button>
+                    <ul>
+                        <li>
+                            <a href="introduce.html">캠핑장 소개</a>
+                            <ul class="dropdown">
+                                <li><a href="introduce.html">인사말</a></li>
+                                <li><a href="rules.html">이용 수칙</a></li>
+                                <li><a href="map.html">오시는 길</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="facility.html">캠핑장 둘러보기</a>
+                            <ul class="dropdown">
+                                <li><a href="facility.html">시설 안내</a></li>
+                                <li><a href="sites.html">구역별 자리 안내</a></li>
+                                <!-- <li><a href="news.html">월촌의 소식('가칭')</a></li> -->
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="rates.html">캠핑장 예약</a>
+                            <ul class="dropdown">
+                                <li><a href="rates.html">예약 / 요금 안내</a></li>
+                                <li><a href="reservation.html">실시간 예약</a></li>
+                                <li><a href="confirm.html">예약 확인 / 취소</a></li>
+                                <li><a href="refund.html">환불규정 / 유의사항</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="notice.html">커뮤니티</a>
+                            <ul class="dropdown">
+                                <li><a href="notice.html">공지사항</a></li>
+                                <li><a href="faq.html">자주 묻는 질문</a></li>
+                                <li><a href="contact.html">문의하기</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="btn-menu">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-visual" style="
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/high.jpg'); 
+    background-size: cover; 
+    background-position: 50% 63%;">
+        <div class="wrap">
+            <h2>실시간 예약</h2>
+            <p>월촌캠핑장의 실시간 예약 시스템을 이용해보세요.</p>
+        </div>
+    </section>
+    <!-- 백워드 부분 -->
+    <div class="breadcrumb">
+        <div class="wrap">
+            <a href="index.html">HOME</a> <span>&gt;</span> 캠핑장 예약 <span>&gt;</span> <strong>실시간 예약</strong>
+        </div>
+    </div>
+
+    <main class="section">
+        <div class="wrap">
+
+            <div class="section-title">
+                <h2>Payment Information</h2>
+                <p>예약 확정을 위해 아래 계좌로 입금을 진행해 주세요.</p>
+                <div class="line"></div>
+            </div>
+
+            <div class="res-card payment-container" style="
+            max-width: 800px;
+            margin: 0 auto;
+        ">
+
+                <div class="status-badge">
+                    임시 예약 완료 (입금 대기)
+                </div>
+
+                <!-- 예약 금액 안내 -->
+                <div style="
+                margin: 25px 0;
+                padding: 25px;
+                background: #f8f6f1;
+                border: 1px solid #e8e5df;
+                border-radius: 12px;
+                text-align: left;
+            ">
+
+                    <h3 style="
+                    margin-bottom: 18px;
+                    color: var(--primary-dark);
+                    font-size: 18px;
+                ">
+                        예약 금액 안내
+                    </h3>
+
+                    <!-- 기본 숙박 요금 -->
+                    <div style="
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 20px;
+                    padding: 11px 0;
+                    border-bottom: 1px dashed #ddd;
+                ">
+                        <span>기본 숙박 요금</span>
+
+                        <strong id="base-price">
+                            계산 중...
+                        </strong>
+                    </div>
+
+                    <!-- 선택한 추가 옵션 -->
+                    <div style="
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 20px;
+                    padding: 11px 0;
+                    border-top: 1px dashed #ddd;
+                ">
+                        <span>추가 옵션 이용료</span>
+
+                        <strong id="option-total-price" style="color: var(--accent);">
+                            계산 중...
+                        </strong>
+                    </div>
+
+                </div>
+
+                <!-- 최종 금액 및 입금 계좌 -->
+                <div class="bank-info-box">
+
+                    <div class="payment-amount" style="margin-bottom: 30px;">
+                        입금하실 최종 금액:
+
+                        <strong id="final-price">
+                            계산 중...
+                        </strong>
+                    </div>
+
+                    <!-- 계좌 정보를 아래에 표시 -->
+                    <small>입금 계좌 안내</small>
+
+                    <div class="bank-details">
+
+                        <span class="bank-name">
+                            NH농협은행
+                        </span>
+
+                        <strong class="account-number">
+                            301-0389-3734-11
+                        </strong>
+
+                        <span class="account-holder">
+                            예금주: 농업회사법인 주식회사 대웅영농산업개발
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- 입금 제한 시간 및 안내 -->
+                <div class="payment-notice" style="
+                margin-top: 30px;
+                padding: 35px;
+                background: #fff;
+                border: 1px solid #eee;
+                border-radius: 15px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            ">
+
+                    <div style="
+                    margin-bottom: 30px;
+                    padding: 20px;
+                    background: #fff5f5;
+                    border: 1px solid #ffe3e3;
+                    border-radius: 10px;
+                    text-align: center;
+                ">
+
+                        <p class="timer-text" style="
+                        margin: 0;
+                        color: #e74c3c;
+                        font-size: 18px;
+                        font-weight: 700;
+                    ">
+
+                            ⚠️
+
+                            <span id="countdown" style="
+                            font-size: 22px;
+                            font-family: monospace;
+                        ">
+                                03:00:00
+                            </span>
+
+                            이내에 입금이 확인되지 않을 경우
+
+                            <span style="
+                            display: block;
+                            margin-top: 5px;
+                            color: #666;
+                            font-size: 16px;
+                            font-weight: 500;
+                        ">
+                                시스템상
+                                <strong>자동으로 예약이 취소</strong>됩니다.
+                            </span>
+
+                        </p>
+                    </div>
+
+                    <h4 style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 15px;
+                    color: var(--primary-dark);
+                    font-size: 17px;
+                ">
+                        <span style="font-size: 20px;">📝</span>
+                        입금 전 꼭 확인해 주세요
+                    </h4>
+
+                    <ul class="notice-list" style="
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                ">
+
+                        <li style="
+                        display: flex;
+                        gap: 10px;
+                        padding: 12px 0;
+                        border-bottom: 1px dashed #eee;
+                        line-height: 1.6;
+                    ">
+                            <span style="color: var(--accent);">•</span>
+
+                            <span>
+                                반드시
+                                <strong>예약자 성함 뒤 “월촌”</strong>을 붙여서
+                                입금해 주세요.
+
+                                예:
+                                <span style="
+                                color: var(--primary);
+                                font-weight: 700;
+                            ">
+                                    홍길동 월촌
+                                </span>
+                            </span>
+                        </li>
+
+                        <li style="
+                        display: flex;
+                        gap: 10px;
+                        padding: 12px 0;
+                        border-bottom: 1px dashed #eee;
+                        line-height: 1.6;
+                    ">
+                            <span style="color: var(--accent);">•</span>
+
+                            <span>
+                                예약 완료는 <strong>예약 확정 문자</strong>와
+                                홈페이지 <strong>예약 확인</strong> 메뉴에서
+                                확인할 수 있습니다.
+                            </span>
+                        </li>
+
+                        <li style="
+                        display: flex;
+                        gap: 10px;
+                        padding: 12px 0;
+                        border-bottom: 1px dashed #eee;
+                        line-height: 1.6;
+                    ">
+                            <span style="color: var(--accent);">•</span>
+
+                            <span>
+                                입금 확인 절차를 거쳐
+                                <strong>10분 이내</strong>에 예약 확정 문자가
+                                발송됩니다.
+                            </span>
+                        </li>
+
+                        <li style="
+                        display: flex;
+                        gap: 10px;
+                        padding: 12px 0;
+                        color: #333;
+                        font-size: 14px;
+                        line-height: 1.6;
+                    ">
+                            <span style="color: var(--accent);">•</span>
+
+                            <span>
+                                3시간 이내 미입금 시
+                                <strong>별도의 통보 없이</strong>
+                                예약 슬롯이 자동으로 개방됩니다.
+                            </span>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div style="
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 40px;
+            ">
+
+                    <a href="index.html" class="btn btn-primary">
+                        홈으로 이동
+                    </a>
+
+                    <a href="confirm.html" class="btn btn-outline">
+                        내 예약 확인하기
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 기본요금 및 추가 옵션 표시 -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const basePriceElement =
+                    document.getElementById('base-price');
+
+                const optionSummaryElement =
+                    document.getElementById('option-summary');
+
+                const finalPriceElement =
+                    document.getElementById('final-price');
+
+                const allowedOptionTotals =
+                    new Set([0, 20000, 30000, 50000]);
+
+                let savedOptionData = null;
+
+                /*
+                 * reservation2에서 저장한 옵션 정보 가져오기
+                 */
+                try {
+                    const savedText =
+                        sessionStorage.getItem(
+                            'wolchonReservationOptions'
+                        );
+
+                    if (savedText) {
+                        savedOptionData = JSON.parse(savedText);
+                    }
+                } catch (error) {
+                    console.error(
+                        '추가 옵션 정보를 불러오지 못했습니다.',
+                        error
+                    );
+                }
+
+                /*
+                 * 이전 reservation2 주소에서 숙박일수 계산
+                 * 예: reservation2.html?date=2026-07-29 ~ 2026-07-30
+                 */
+                function getNightsFromReferrer() {
+                    try {
+                        if (!document.referrer) {
+                            return null;
+                        }
+
+                        const referrerUrl =
+                            new URL(document.referrer);
+
+                        const dateText =
+                            referrerUrl.searchParams.get('date');
+
+                        if (!dateText) {
+                            return null;
+                        }
+
+                        const dateParts =
+                            dateText.split(/\s*~\s*/);
+
+                        if (dateParts.length !== 2) {
+                            return null;
+                        }
+
+                        const startDate =
+                            new Date(`${dateParts[0]}T00:00:00`);
+
+                        const endDate =
+                            new Date(`${dateParts[1]}T00:00:00`);
+
+                        const difference =
+                            endDate.getTime() -
+                            startDate.getTime();
+
+                        const nights =
+                            Math.round(
+                                difference /
+                                (1000 * 60 * 60 * 24)
+                            );
+
+                        return nights > 0 ? nights : null;
+
+                    } catch (error) {
+                        return null;
+                    }
+                }
+
+                /*
+                 * 옵션 이름에 붙어 있던 가격 문구 제거
+                 */
+                function cleanOptionName(optionName) {
+                    return String(optionName || '')
+                        .replace(/\s*\(\+\s*[\d,]+원\)/g, '')
+                        .trim();
+                }
+
+                /*
+                 * sessionStorage에 저장된 옵션 이름 확인
+                 */
+                function getSavedOptionNames() {
+                    if (!savedOptionData) {
+                        return [];
+                    }
+
+                    if (
+                        Array.isArray(
+                            savedOptionData.selectedOptions
+                        )
+                    ) {
+                        return savedOptionData.selectedOptions
+                            .map(cleanOptionName)
+                            .filter(Boolean);
+                    }
+
+                    const optionNames = [];
+
+                    const tableSelected = Boolean(
+                        savedOptionData.table ??
+                        savedOptionData.tableOption ??
+                        savedOptionData.optionTable
+                    );
+
+                    const poolSelected = Boolean(
+                        savedOptionData.pool ??
+                        savedOptionData.poolOption ??
+                        savedOptionData.optionPool
+                    );
+
+                    if (tableSelected) {
+                        optionNames.push('테이블 사용');
+                    }
+
+                    if (poolSelected) {
+                        optionNames.push('수영장 이용');
+                    }
+
+                    return optionNames;
+                }
+
+                /*
+                 * sessionStorage에 저장된 옵션금액 확인
+                 */
+                function getSavedOptionTotal() {
+                    if (!savedOptionData) {
+                        return null;
+                    }
+
+                    const savedTotal = Number(
+                        savedOptionData.optionTotal ??
+                        savedOptionData.option_total
+                    );
+
+                    if (allowedOptionTotals.has(savedTotal)) {
+                        return savedTotal;
+                    }
+
+                    const optionNames =
+                        getSavedOptionNames();
+
+                    let calculatedTotal = 0;
+
+                    if (
+                        optionNames.includes('테이블 사용')
+                    ) {
+                        calculatedTotal += 30000;
+                    }
+
+                    if (
+                        optionNames.includes('수영장 이용')
+                    ) {
+                        calculatedTotal += 20000;
+                    }
+
+                    return allowedOptionTotals.has(
+                        calculatedTotal
+                    )
+                        ? calculatedTotal
+                        : null;
+                }
+
+                /*
+                 * 옵션금액으로 옵션 이름 복원
+                 */
+                function getOptionNamesFromTotal(optionTotal) {
+                    if (optionTotal === 20000) {
+                        return ['수영장 이용'];
+                    }
+
+                    if (optionTotal === 30000) {
+                        return ['테이블 사용'];
+                    }
+
+                    if (optionTotal === 50000) {
+                        return [
+                            '테이블 사용',
+                            '수영장 이용'
+                        ];
+                    }
+
+                    return [];
+                }
+
+                /*
+                 * main.js가 DB에서 최종금액을 불러올 때까지 확인
+                 */
+                const priceCheckTimer = setInterval(function () {
+                    if (!finalPriceElement) {
+                        clearInterval(priceCheckTimer);
+                        return;
+                    }
+
+                    const finalPriceText =
+                        finalPriceElement.textContent || '';
+
+                    if (
+                        finalPriceText.includes('계산 중') ||
+                        finalPriceText.includes('불러오는 중')
+                    ) {
+                        return;
+                    }
+
+                    const finalPrice = Number(
+                        finalPriceText.replace(/[^0-9]/g, '')
+                    );
+
+                    if (
+                        !Number.isFinite(finalPrice) ||
+                        finalPrice <= 0
+                    ) {
+                        return;
+                    }
+
+                    const nights =
+                        getNightsFromReferrer();
+
+                    let optionTotal =
+                        getSavedOptionTotal();
+
+                    /*
+                     * 저장된 옵션 정보가 없으면
+                     * 최종금액 - 기본 숙박비로 옵션금액 추정
+                     */
+                    if (
+                        optionTotal === null &&
+                        nights !== null
+                    ) {
+                        const calculatedOptionTotal =
+                            finalPrice -
+                            (nights * 50000);
+
+                        if (
+                            allowedOptionTotals.has(
+                                calculatedOptionTotal
+                            )
+                        ) {
+                            optionTotal =
+                                calculatedOptionTotal;
+                        }
+                    }
+
+                    if (optionTotal === null) {
+                        optionTotal = 0;
+                    }
+
+                    const basePrice =
+                        Math.max(
+                            0,
+                            finalPrice - optionTotal
+                        );
+
+                    if (basePriceElement) {
+                        basePriceElement.textContent =
+                            `${basePrice.toLocaleString('ko-KR')}원`;
+                    }
+
+                    const optionPriceElement =
+                        document.getElementById('option-total-price');
+
+                    if (optionPriceElement) {
+                        optionPriceElement.textContent =
+                            `${optionTotal.toLocaleString('ko-KR')}원`;
+                    }
+
+                    let optionNames =
+                        getSavedOptionNames();
+
+                    if (optionNames.length === 0) {
+                        optionNames =
+                            getOptionNamesFromTotal(
+                                optionTotal
+                            );
+                    }
+
+                    if (optionSummaryElement) {
+                        optionSummaryElement.textContent =
+                            optionNames.length > 0
+                                ? optionNames.join(', ')
+                                : '선택 없음';
+                    }
+
+                    clearInterval(priceCheckTimer);
+                }, 100);
+
+                /*
+                 * 서버 오류 등으로 계속 계산 중이 되는 상황 방지
+                 */
+                setTimeout(function () {
+                    clearInterval(priceCheckTimer);
+
+                    if (
+                        basePriceElement &&
+                        basePriceElement.textContent.includes(
+                            '계산 중'
+                        )
+                    ) {
+                        basePriceElement.textContent =
+                            '확인 불가';
+                    }
+
+                    if (
+                        optionSummaryElement &&
+                        optionSummaryElement.textContent.includes(
+                            '확인 중'
+                        )
+                    ) {
+                        optionSummaryElement.textContent =
+                            '선택 없음';
+                    }
+                }, 10000);
+            });
+        </script>
+
+    </main>
+
+    <footer id="footer">
+        <div class="wrap">
+            <div id="footer-top">
+                <div>
+                    <div class="footer-logo">🏕️ 월촌<span>캠핑장</span></div>
+                    <div class="footer-info">
+                        <p>상호 : 월촌캠핑장 </p>
+                        <p>농업회사법인 주식회사 대웅영농산업개발 대표 : 김순용</p>
+                        <p>주소 : 경상남도 함안군 군복면 월촌3길 71-13 (군북면 월촌리 1365-2)</p>
+                        <p>사업자번호 : 224-81-68264</p>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <h4>문의 및 예약</h4>
+                    <div class="phone">010-3831-0330</div>
+                    <p>상담시간 : 09:00 ~ 18:00</p>
+                </div>
+            </div>
+            <div id="footer-bottom">
+                <p>Copyright © 2026 월촌캠핑장. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="js/supabase-config.js"></script>
+    <script src="js/main.js?v=20260729-3"></script>
+</body>
+
+</html>
