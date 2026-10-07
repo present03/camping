@@ -131,8 +131,29 @@ const WolchonUtils = {
     },
 
     getFriendlyError(error) {
-        if (error?.code === 'MAINTENANCE') {
-            return '페이지 점검중입니다. 잠시 후 다시 방문해 주세요.';
+        const messages = {
+            MAINTENANCE: '페이지 점검중입니다. 잠시 후 다시 방문해 주세요.',
+            DB_NOT_CONFIGURED: '예약 서버의 DB 연결 설정이 완료되지 않았습니다. 관리자에게 문의해 주세요. [DB_NOT_CONFIGURED]',
+            DB_CONNECTION_FAILED: '예약 서버가 데이터베이스에 연결하지 못했습니다. 관리자에게 문의해 주세요. [DB_CONNECTION_FAILED]',
+            API_NOT_FOUND: '예약 서버 주소를 찾을 수 없습니다. 관리자에게 문의해 주세요. [API_NOT_FOUND]',
+            INVALID_API_RESPONSE: '예약 서버가 올바른 응답을 보내지 않았습니다. 관리자에게 문의해 주세요. [INVALID_API_RESPONSE]',
+            NETWORK_ERROR: '예약 서버에 연결하지 못했습니다. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.',
+            SERVER_ERROR: '예약 서버 내부에서 오류가 발생했습니다. 관리자에게 문의해 주세요. [SERVER_ERROR]',
+            INVALID_DATE_RANGE: '퇴실일은 입실일보다 이후 날짜로 선택해 주세요.',
+            INVALID_START_DATE: '입실 날짜를 다시 선택해 주세요.',
+            INVALID_END_DATE: '퇴실 날짜를 다시 선택해 주세요.',
+            ALREADY_BOOKED: '선택하신 날짜와 구역에 이미 예약이 있습니다.',
+            ADMIN_REQUIRED: '관리자 로그인이 필요합니다.',
+            INVALID_CSRF: '로그인 정보가 만료되었습니다. 다시 로그인해 주세요.',
+            TOO_MANY_REQUESTS: '요청이 너무 빠릅니다. 잠시 후 다시 시도해 주세요.'
+        };
+        if (Object.prototype.hasOwnProperty.call(messages, error?.code)) {
+            return messages[error.code];
+        }
+        if (error?.code === 'API_HTTP_ERROR') {
+            const status = Number(error.httpStatus);
+            const suffix = Number.isInteger(status) && status >= 400 && status <= 599 ? ` [HTTP ${status}]` : '';
+            return `예약 서버가 요청을 처리하지 못했습니다. 관리자에게 문의해 주세요.${suffix}`;
         }
         const message = String(error?.message || error || '');
 

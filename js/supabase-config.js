@@ -11,9 +11,10 @@
     const API_URL = new URL('api/index.php', document.baseURI).toString();
     let csrfToken = null;
 
-    function makeError(payload, fallbackMessage) {
+    function makeError(payload, fallbackMessage, httpStatus = null) {
         const error = new Error(payload?.message || fallbackMessage || '서버 요청에 실패했습니다.');
         error.code = payload?.code || 'API_ERROR';
+        error.httpStatus = httpStatus;
         return error;
     }
 
@@ -43,7 +44,10 @@
                 return {
                     data: null,
                     count: null,
-                    error: makeError(null, '서버 응답을 읽지 못했습니다.')
+                    error: makeError({
+                        code: response.status === 404 ? 'API_NOT_FOUND' :
+                            response.ok ? 'INVALID_API_RESPONSE' : 'API_HTTP_ERROR'
+                    }, '서버 응답을 읽지 못했습니다.', response.status)
                 };
             }
 
@@ -59,7 +63,7 @@
                 return {
                     data: null,
                     count: result?.count ?? null,
-                    error: makeError(result?.error, `서버 요청이 실패했습니다. (${response.status})`)
+                    error: makeError(result?.error, `서버 요청이 실패했습니다. (${response.status})`, response.status)
                 };
             }
 
@@ -72,7 +76,7 @@
             return {
                 data: null,
                 count: null,
-                error: makeError(error, '서버에 연결하지 못했습니다.')
+                error: makeError({ code: 'NETWORK_ERROR' }, '서버에 연결하지 못했습니다.')
             };
         }
     }
