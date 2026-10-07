@@ -102,6 +102,24 @@ const WolchonUtils = {
         return Math.max(1, Math.round(diff / 86400000));
     },
 
+    getStayPrice(start, end) {
+        // UTC 날짜로 순회해 브라우저 시간대/DST와 무관하게 숙박일별 계산합니다.
+        const date = new Date(`${start}T00:00:00Z`);
+        const checkout = new Date(`${end}T00:00:00Z`);
+
+        if (!Number.isFinite(date.getTime()) || !Number.isFinite(checkout.getTime()) || checkout <= date) {
+            throw new Error('예약 날짜 범위가 올바르지 않습니다.');
+        }
+
+        let total = 0;
+        while (date < checkout) {
+            const day = date.getUTCDay();
+            total += day >= 1 && day <= 4 ? 35000 : 50000;
+            date.setUTCDate(date.getUTCDate() + 1);
+        }
+        return total;
+    },
+
     formatPrice(value) {
         const numericValue = Number(value);
 
@@ -1296,11 +1314,11 @@ const ResManager = {
                     return;
                 }
 
-                const nights = WolchonUtils.getNights(start, end);
+                const stayPrice = WolchonUtils.getStayPrice(start, end);
                 const priceElement = document.getElementById('final-price');
 
                 if (priceElement) {
-                    priceElement.innerText = WolchonUtils.formatPrice(nights * 50000);
+                    priceElement.innerText = WolchonUtils.formatPrice(stayPrice);
                 }
 
                 document.getElementById('step-map').style.display = 'block';
@@ -1373,11 +1391,11 @@ const ResManager = {
             return;
         }
 
-        const nights = WolchonUtils.getNights(dateRange.start, dateRange.end);
+        const stayPrice = WolchonUtils.getStayPrice(dateRange.start, dateRange.end);
         const priceElement = document.getElementById('final-price');
 
         if (priceElement) {
-            priceElement.innerText = WolchonUtils.formatPrice(nights * 50000);
+            priceElement.innerText = WolchonUtils.formatPrice(stayPrice);
         }
 
         form.addEventListener('submit', async (event) => {

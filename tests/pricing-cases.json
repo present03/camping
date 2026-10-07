@@ -1,0 +1,15 @@
+[
+  {"name":"Monday night","start":"2026-10-05","end":"2026-10-06","expected":35000},
+  {"name":"Thursday night","start":"2026-10-08","end":"2026-10-09","expected":35000},
+  {"name":"Friday night","start":"2026-10-09","end":"2026-10-10","expected":50000},
+  {"name":"Saturday night","start":"2026-10-10","end":"2026-10-11","expected":50000},
+  {"name":"Sunday night","start":"2026-10-11","end":"2026-10-12","expected":50000},
+  {"name":"Thursday and Friday","start":"2026-10-08","end":"2026-10-10","expected":85000},
+  {"name":"Sunday and Monday","start":"2026-10-11","end":"2026-10-13","expected":85000},
+  {"name":"Full week","start":"2026-10-05","end":"2026-10-12","expected":290000},
+  {"name":"Month boundary","start":"2026-10-31","end":"2026-11-03","expected":135000},
+  {"name":"Year boundary","start":"2026-12-31","end":"2027-01-02","expected":85000},
+  {"name":"Leap day","start":"2028-02-28","end":"2028-03-01","expected":70000},
+  {"name":"DST boundary","start":"2026-03-07","end":"2026-03-10","expected":135000},
+  {"name":"Maximum 30 nights","start":"2026-10-05","end":"2026-11-04","expected":1230000}
+]

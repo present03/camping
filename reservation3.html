@@ -384,51 +384,16 @@
                     );
                 }
 
-                /*
-                 * 이전 reservation2 주소에서 숙박일수 계산
-                 * 예: reservation2.html?date=2026-07-29 ~ 2026-07-30
-                 */
-                function getNightsFromReferrer() {
+                /* 이전 예약 페이지의 날짜로 요일별 기본 숙박비 계산 */
+                function getBasePriceFromReferrer() {
                     try {
-                        if (!document.referrer) {
-                            return null;
-                        }
-
-                        const referrerUrl =
-                            new URL(document.referrer);
-
-                        const dateText =
-                            referrerUrl.searchParams.get('date');
-
-                        if (!dateText) {
-                            return null;
-                        }
-
-                        const dateParts =
-                            dateText.split(/\s*~\s*/);
-
-                        if (dateParts.length !== 2) {
-                            return null;
-                        }
-
-                        const startDate =
-                            new Date(`${dateParts[0]}T00:00:00`);
-
-                        const endDate =
-                            new Date(`${dateParts[1]}T00:00:00`);
-
-                        const difference =
-                            endDate.getTime() -
-                            startDate.getTime();
-
-                        const nights =
-                            Math.round(
-                                difference /
-                                (1000 * 60 * 60 * 24)
-                            );
-
-                        return nights > 0 ? nights : null;
-
+                        if (!document.referrer) return null;
+                        const referrerUrl = new URL(document.referrer);
+                        const range = window.WolchonUtils.parseDateRange(
+                            referrerUrl.searchParams.get('date')
+                        );
+                        if (!range) return null;
+                        return window.WolchonUtils.getStayPrice(range.start, range.end);
                     } catch (error) {
                         return null;
                     }
@@ -579,8 +544,8 @@
                         return;
                     }
 
-                    const nights =
-                        getNightsFromReferrer();
+                    const expectedBasePrice =
+                        getBasePriceFromReferrer();
 
                     let optionTotal =
                         getSavedOptionTotal();
@@ -591,11 +556,11 @@
                      */
                     if (
                         optionTotal === null &&
-                        nights !== null
+                        expectedBasePrice !== null
                     ) {
                         const calculatedOptionTotal =
                             finalPrice -
-                            (nights * 50000);
+                            expectedBasePrice;
 
                         if (
                             allowedOptionTotals.has(
@@ -707,7 +672,7 @@
 
 
     <script src="js/supabase-config.js"></script>
-    <script src="js/main.js?v=20260729-3"></script>
+    <script src="js/main.js?v=20261008-1"></script>
 </body>
 
 </html>

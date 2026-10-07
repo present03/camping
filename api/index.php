@@ -791,7 +791,7 @@ function rpc_create_reservation(array $params): never
         }
 
         $id = uuid_v4();
-        $price = ($nights * 50000) + $optionTotal;
+        $price = calculate_stay_price($start, $end) + $optionTotal;
         $expiresAt = (new DateTimeImmutable('+3 hours'))->format('Y-m-d H:i:s');
         $reservationDate = $start->format('Y-m-d') . ' ~ ' . $end->format('Y-m-d');
 

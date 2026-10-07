@@ -270,6 +270,16 @@ function parse_date(string $value, string $code = 'INVALID_DATE'): DateTimeImmut
     return $date;
 }
 
+function calculate_stay_price(DateTimeImmutable $start, DateTimeImmutable $end): int
+{
+    $total = 0;
+    // 입실일부터 퇴실 전날까지: 월~목 35,000원, 금~일 50,000원.
+    for ($date = $start; $date < $end; $date = $date->modify('+1 day')) {
+        $total += (int)$date->format('N') <= 4 ? 35000 : 50000;
+    }
+    return $total;
+}
+
 function mysql_datetime(mixed $value): string
 {
     if ($value === null || trim((string)$value) === '') {

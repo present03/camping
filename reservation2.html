@@ -417,42 +417,12 @@
                     'wolchonReservationOptions';
 
 
-                /*
-                 * 예약 날짜로 숙박일수 계산
-                 */
-                function getNights() {
-                    const dateText =
-                        new URLSearchParams(location.search)
-                            .get('date');
-
-                    if (!dateText) {
-                        return 1;
-                    }
-
-                    const dateParts =
-                        dateText.split(/\s*~\s*/);
-
-                    if (dateParts.length !== 2) {
-                        return 1;
-                    }
-
-                    const startDate =
-                        new Date(`${dateParts[0]}T00:00:00`);
-
-                    const endDate =
-                        new Date(`${dateParts[1]}T00:00:00`);
-
-                    const difference =
-                        endDate.getTime() -
-                        startDate.getTime();
-
-                    const nights =
-                        Math.round(
-                            difference /
-                            (1000 * 60 * 60 * 24)
-                        );
-
-                    return nights > 0 ? nights : 1;
+                /* 예약 날짜의 요일별 숙박요금 합산 */
+                function getBasePrice() {
+                    const dateText = new URLSearchParams(location.search).get('date');
+                    const range = window.WolchonUtils.parseDateRange(dateText);
+                    if (!range) return 0;
+                    return window.WolchonUtils.getStayPrice(range.start, range.end);
                 }
 
 
@@ -468,10 +438,7 @@
                  * 옵션 및 최종 결제금액 갱신
                  */
                 function updateReservationPrice() {
-                    const nights = getNights();
-
-                    const basePrice =
-                        nights * 50000;
+                    const basePrice = getBasePrice();
 
                     const optionTotal =
                         poolOption?.checked
@@ -572,7 +539,7 @@
     <!-- Supabase 연결 후 DB 기능을 실행합니다. -->
 
     <script src="js/supabase-config.js"></script>
-    <script src="js/main.js?v=20260729-3"></script>
+    <script src="js/main.js?v=20261008-1"></script>
 </body>
 
 </html>
