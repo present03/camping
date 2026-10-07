@@ -131,6 +131,9 @@ const WolchonUtils = {
     },
 
     getFriendlyError(error) {
+        if (error?.code === 'MAINTENANCE') {
+            return '페이지 점검중입니다. 잠시 후 다시 방문해 주세요.';
+        }
         const message = String(error?.message || error || '');
 
         if (message.includes('SERVER_API_NOT_CONFIGURED')) {
@@ -2061,6 +2064,7 @@ const FacilityManager = {
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', async function () {
+    if (window.SiteMaintenance && !await window.SiteMaintenance.ready) return;
     CampingUI.init();
 
     const adminAllowed = await WolchonUtils.ensureAdmin();

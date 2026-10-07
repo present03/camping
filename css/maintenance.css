@@ -1,0 +1,19 @@
+.maintenance-active > :not(#maintenance-screen):not(script):not(style) { display: none !important; }
+.maintenance-screen {
+    position: fixed; inset: 0; z-index: 2147483647; overflow: auto;
+    display: grid; place-items: center; padding: 24px; box-sizing: border-box;
+    background: #f4f5ef; color: #283b2a; font-family: sans-serif; text-align: center;
+}
+.maintenance-card { width: 100%; max-width: 620px; padding: 48px 24px; box-sizing: border-box; }
+.maintenance-brand { font-weight: 700; letter-spacing: .12em; color: #697d53; }
+.maintenance-card h1 { margin: 24px 0; font-size: clamp(26px, 5vw, 38px); }
+.maintenance-card p { line-height: 1.8; word-break: keep-all; }
+#maintenance-end { margin: 28px 0 16px; padding: 16px; border-radius: 12px; background: #fff; font-weight: 700; }
+.maintenance-card a { display: inline-block; margin-top: 24px; color: #536747; }
+.maintenance-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-top: 16px; }
+.maintenance-controls label { display: grid; gap: 8px; }
+.maintenance-controls input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font: inherit; }
+.maintenance-controls button { padding: 12px 18px; border: 0; border-radius: 6px; cursor: pointer; background: #365337; color: white; font: inherit; }
+.maintenance-controls button:disabled { opacity: .5; cursor: not-allowed; }
+.maintenance-controls button:last-child { background: #6e482a; }
+#maintenance-feedback { margin-top: 12px; }

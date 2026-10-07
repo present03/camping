@@ -52,6 +52,10 @@
             }
 
             if (!response.ok || result?.ok !== true) {
+                if (result?.error?.code === 'MAINTENANCE') {
+                    window.SiteMaintenance?.show(null);
+                    window.SiteMaintenance?.check();
+                }
                 return {
                     data: null,
                     count: result?.count ?? null,
@@ -205,6 +209,11 @@
     }
 
     window.supabaseClient = {
+        maintenance: {
+            set(enabled, expectedEnd) {
+                return request({ action: 'maintenance', enabled, expected_end: expectedEnd });
+            }
+        },
         from(table) {
             return new QueryBuilder(table);
         },

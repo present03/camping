@@ -9,6 +9,7 @@
     <title>관리자 메인 | 월촌캠핑장</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/maintenance.css">
 </head>
 
 <body>
@@ -20,6 +21,21 @@
                 <h1>관리자 메인</h1>
                 <p>월촌캠핑장 홈페이지의 예약, 공지사항, 문의글, FAQ를 관리합니다.</p>
             </div>
+
+            <section class="admin-panel" aria-labelledby="maintenance-title">
+                <h2 id="maintenance-title">홈페이지 업데이트</h2>
+                <p id="maintenance-status" role="status">점검 상태 확인 중…</p>
+                <p>점검 중에는 방문자에게 안내 페이지가 표시됩니다. 관리자 페이지는 계속 사용할 수 있습니다.</p>
+                <div class="maintenance-controls">
+                    <label for="maintenance-expected-end">예상 종료 시간 (한국 시간)
+                        <input type="datetime-local" id="maintenance-expected-end" required>
+                    </label>
+                    <button type="button" id="maintenance-start" disabled>페이지 업데이트 시작</button>
+                    <button type="button" id="maintenance-stop" disabled>업데이트 종료</button>
+                </div>
+                <p>예상 시간이 지나도 자동 종료되지 않습니다. 작업이 끝나면 업데이트 종료를 눌러 주세요.</p>
+                <p id="maintenance-feedback" role="status" aria-live="polite"></p>
+            </section>
 
             <section class="admin-card-grid dashboard-card-grid">
                 <div class="admin-card">
@@ -117,8 +133,9 @@
 
     <!-- Supabase 클라이언트와 관리자 인증을 먼저 준비합니다. -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-config.js"></script>
+    <script src="js/supabase-config.js?v=20261008-maintenance"></script>
     <script src="js/admin-auth.js"></script>
+    <script src="js/admin-maintenance.js?v=20261008-1"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', async function () {

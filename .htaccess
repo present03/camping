@@ -1,0 +1,4 @@
+# Route visitor HTML through the maintenance gate. Administrator pages stay reachable.
+RewriteEngine On
+RewriteRule ^$ api/page.php?page=index.html [L]
+RewriteRule ^((?!admin_|naver)[A-Za-z0-9_-]+\.html)$ api/page.php?page=$1 [L]

@@ -2,10 +2,15 @@
 declare(strict_types=1);
 
 require __DIR__ . '/bootstrap.php';
+require __DIR__ . '/maintenance.php';
 
 header('X-Frame-Options: SAMEORIGIN');
 
 try {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['maintenance_status'])) {
+        json_response(maintenance_read());
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['health'])) {
         db()->query('SELECT 1')->fetchColumn();
         json_response([
@@ -23,8 +28,15 @@ try {
     $input = json_input();
     $action = (string)($input['action'] ?? '');
 
+    // Login and maintenance controls must remain available during an outage.
+    if (!in_array($action, ['auth', 'maintenance'], true) && current_admin(false) === null && maintenance_read()['enabled']) {
+        header('Retry-After: 60');
+        throw new ApiException('MAINTENANCE', '페이지 점검중입니다. 잠시 후 다시 방문해 주세요.', 503);
+    }
+
     match ($action) {
         'auth' => handle_auth($input),
+        'maintenance' => handle_maintenance($input),
         'query' => handle_query($input),
         'rpc' => handle_rpc($input),
         default => throw new ApiException('INVALID_ACTION', '알 수 없는 API 요청입니다.', 400),
@@ -38,6 +50,26 @@ try {
         '서버 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
         500
     ));
+}
+
+function handle_maintenance(array $input): never
+{
+    require_admin(true);
+    if (!isset($input['enabled']) || !is_bool($input['enabled'])) {
+        throw new ApiException('INVALID_MAINTENANCE', '점검 상태를 확인해 주세요.', 422);
+    }
+    try {
+        $end = $input['enabled'] ? maintenance_expected_end((string)($input['expected_end'] ?? '')) : null;
+    } catch (InvalidArgumentException $error) {
+        throw new ApiException('INVALID_MAINTENANCE_END', $error->getMessage(), 422);
+    }
+    try {
+        $state = maintenance_write($input['enabled'], $end);
+    } catch (Throwable $error) {
+        error_log('[Wolchon maintenance save] ' . $error->getMessage());
+        throw new ApiException('MAINTENANCE_SAVE_FAILED', '점검 상태를 저장하지 못했습니다. 호스팅의 api/runtime 폴더 쓰기 권한을 확인해 주세요.', 500);
+    }
+    json_response($state);
 }
 
 function handle_auth(array $input): never
