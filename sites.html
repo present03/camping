@@ -174,204 +174,18 @@
                 <div class="line"></div>
             </div>
 
-            <!-- 탭 메뉴 -->
-            <div class="tab-menu">
-                <button type="button" class="tab-btn active" data-tab="tab-map">
-                    전체 배치도
-                </button>
-
-                <button type="button" class="tab-btn" data-tab="tab-auto">
-                    오토사이트
-                </button>
-
-                <button type="button" class="tab-btn" data-tab="tab-general">
-                    일반사이트
-                </button>
+            <div style="max-width: 1000px; margin: 0 auto; padding: 15px; background: #f8f8f5; border: 1px solid #eeeeea; border-radius: 15px; text-align: center;">
+                <a href="sites.jpg?v=20261009" target="_blank" rel="noopener" style="display: block; line-height: 0;">
+                    <img src="sites.jpg?v=20261009" alt="월촌캠핑장 1번부터 24번까지 전체 구역 안내도" width="2309" height="3265" style="display: block; width: 100%; height: auto; border-radius: 10px;">
+                </a>
             </div>
-
-
-            <!-- 전체 배치도 -->
-            <div id="tab-map" class="tab-content active">
-
-                <div style="
-                max-width: 1000px;
-                margin: 0 auto;
-                padding: 15px;
-                background: #f8f8f5;
-                border: 1px solid #eeeeea;
-                border-radius: 15px;
-                text-align: center;
-            ">
-                    <a href="images/sites.jpg" target="_blank" rel="noopener" style="display: block; line-height: 0;">
-
-                        <img src="images/sites.jpg" alt="월촌캠핑장 전체 사이트 안내도" style="
-                            display: block;
-                            width: 100%;
-                            height: auto;
-                            margin: 0 auto;
-                            border-radius: 10px;
-                         ">
-                    </a>
-                </div>
-
-                <p style="
-                margin-top: 15px;
-                color: var(--text-light);
-                text-align: center;
-                line-height: 1.7;
-                word-break: keep-all;
-            ">
-                    안내도를 누르면 원본 크기로 크게 확인할 수 있습니다.<br>
-                    별표는 콘센트 위치를 나타냅니다.
-                </p>
-
-            </div>
-
-
-            <!-- 오토사이트 -->
-            <div id="tab-auto" class="tab-content">
-
-                <div class="site-info-grid">
-
-                    <!-- 나중에 오토사이트 사진을 넣을 자리 -->
-                    <div class="site-image" style="
-                    min-height: 400px;
-                    background: #eeeeea;
-                    border-radius: 15px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: #888;
-                    text-align: center;
-                ">
-                        <div>
-                            <p style="font-size: 20px; font-weight: 600;">
-                                오토사이트 사진
-                            </p>
-                            <p style="margin-top: 8px;">
-                                추후 대표 사진을 추가해 주세요.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="site-spec">
-
-                        <h3 style="
-                        margin-bottom: 20px;
-                        color: var(--primary);
-                    ">
-                            오토사이트
-                        </h3>
-
-                        <table>
-                            <tr>
-                                <th>사이트 수</th>
-                                <td>총 11개</td>
-                            </tr>
-
-                            <tr>
-                                <th>사이트 번호</th>
-                                <td>오토1 ~ 오토11</td>
-                            </tr>
-
-                            <tr>
-                                <th>주차 방식</th>
-                                <td>사이트 내 차량 주차</td>
-                            </tr>
-
-                            <tr>
-                                <th>전기 사용</th>
-                                <td>안내도에 표시된 콘센트 이용</td>
-                            </tr>
-
-                            <!-- 실제 설명을 받으면 아래 내용을 수정하면 됩니다. -->
-                            <tr>
-                                <th>상세 안내</th>
-                                <td>
-                                    오토사이트의 크기, 바닥 재질 및 특징은
-                                    추후 안내될 예정입니다.
-                                </td>
-                            </tr>
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- 일반사이트 -->
-            <div id="tab-general" class="tab-content">
-
-                <div class="site-info-grid">
-
-                    <!-- 나중에 일반사이트 사진을 넣을 자리 -->
-                    <div class="site-image" style="
-                    min-height: 400px;
-                    background: #eeeeea;
-                    border-radius: 15px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: #888;
-                    text-align: center;
-                ">
-                        <div>
-                            <p style="font-size: 20px; font-weight: 600;">
-                                일반사이트 사진
-                            </p>
-                            <p style="margin-top: 8px;">
-                                추후 대표 사진을 추가해 주세요.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="site-spec">
-
-                        <h3 style="
-                        margin-bottom: 20px;
-                        color: var(--accent);
-                    ">
-                            일반사이트
-                        </h3>
-
-                        <table>
-                            <tr>
-                                <th>사이트 수</th>
-                                <td>총 3개</td>
-                            </tr>
-
-                            <tr>
-                                <th>사이트 번호</th>
-                                <td>일반1 ~ 일반3</td>
-                            </tr>
-
-                            <tr>
-                                <th>주차 방식</th>
-                                <td>지정 주차장 이용</td>
-                            </tr>
-
-                            <tr>
-                                <th>전기 사용</th>
-                                <td>안내도에 표시된 콘센트 이용</td>
-                            </tr>
-
-                            <!-- 실제 설명을 받으면 아래 내용을 수정하면 됩니다. -->
-                            <tr>
-                                <th>상세 안내</th>
-                                <td>
-                                    일반사이트의 크기, 바닥 재질 및 특징은
-                                    추후 안내될 예정입니다.
-                                </td>
-                            </tr>
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </div>
+            <p style="margin-top: 15px; color: var(--text-light); text-align: center; line-height: 1.7; word-break: keep-all;">
+                캠핑 구역은 총 24개이며, 1번부터 24번까지 번호로 구분합니다.<br>
+                안내도를 누르면 원본 크기로 크게 확인할 수 있습니다. 별표는 콘센트 위치입니다.
+            </p>
+            <p style="margin-top: 24px; text-align: center;">
+                <a href="reservation.html" class="btn btn-primary">날짜 선택하고 예약하기</a>
+            </p>
 
         </div>
     </main>
@@ -401,7 +215,7 @@
     </footer>
 
 
-    <script src="js/main.js?v=20261008-maintenance"></script>
+    <script src="js/main.js?v=20261009-sites"></script>
 </body>
 
 </html>

@@ -37,13 +37,48 @@ for (const scenario of [
         if (scenario.error) {
             assert.equal(alerts.length, 1);
             assert.match(alerts[0], /DB_CONNECTION_FAILED/);
-            assert.equal(price.innerText, undefined); // Calculation did not run after failed availability.
+            assert.equal(price.innerText, '0원'); // No price is offered after failed availability.
         } else {
             assert.equal(alerts.length, 0);
             assert.equal(price.innerText, scenario.price);
             assert.equal(dom.window.document.getElementById('step-map').style.display, 'block');
-            assert.ok(dom.window.document.querySelector('[data-site="오토1"]').classList.contains('booked'));
+            assert.ok(dom.window.document.querySelector('[data-site="1"]').classList.contains('booked'));
         }
         dom.window.close();
     });
 }
+
+test('out-of-order availability cannot select a site for the wrong dates', async () => {
+    const dom = new JSDOM(fs.readFileSync(path.join(root, 'reservation.html'), 'utf8'));
+    await new Promise(resolve => dom.window.document.addEventListener('DOMContentLoaded', resolve, { once: true }));
+    const pending = [];
+    let calendar;
+    const context = vm.createContext({
+        window: { supabaseClient: { rpc() { return new Promise(resolve => pending.push(resolve)); } } },
+        document: dom.window.document, flatpickr(element, options) { calendar = options; },
+        alert() {}, setTimeout() {}, console: { error() {} }
+    });
+    vm.runInContext(fs.readFileSync(path.join(root, 'js/main.js'), 'utf8'), context);
+    await vm.runInContext('ResManager.handleStep1()', context);
+    const dates = (start, end) => [new Date(start + 'T00:00:00'), new Date(end + 'T00:00:00')];
+    const oldRequest = calendar.onChange(dates('2026-10-28', '2026-10-29'));
+    const latestRequest = calendar.onChange(dates('2026-10-29', '2026-10-30'));
+    pending[1]({ data: [{ site: '오토7' }], error: null });
+    await latestRequest;
+    pending[0]({ data: [{ site: '오토1' }], error: null });
+    await oldRequest;
+    const doc = dom.window.document;
+    assert.ok(doc.querySelector('.site-overlay [data-site="16"]').classList.contains('booked'));
+    assert.ok(!doc.querySelector('.site-overlay [data-site="1"]').classList.contains('booked'));
+    assert.equal(doc.querySelector('.site-number-button[data-site="16"]').disabled, true);
+    doc.querySelector('.site-number-button[data-site="4"]').click();
+    assert.equal(doc.getElementById('res-site-val').innerText, '4');
+    assert.equal(doc.querySelector('.site-overlay [data-site="4"]').getAttribute('aria-pressed'), 'true');
+    await calendar.onChange([new Date('2026-10-30T00:00:00')]);
+    assert.equal(doc.getElementById('step-map').style.display, 'none');
+    assert.equal(doc.getElementById('res-site-val').innerText, '-');
+    assert.equal(doc.querySelector('.site-number-button[data-site="4"]').disabled, true);
+    doc.querySelector('.site-overlay [data-site="4"]').dispatchEvent(new dom.window.Event('click'));
+    assert.equal(doc.getElementById('res-site-val').innerText, '-');
+    dom.window.close();
+});

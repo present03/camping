@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/bootstrap.php';
 require __DIR__ . '/maintenance.php';
+require __DIR__ . '/sites.php';
 
 header('X-Frame-Options: SAMEORIGIN');
 
@@ -413,6 +414,10 @@ function select_query(string $table, array $rule, array $input, bool $isAdmin): 
     $statement->execute($params);
     $rows = $statement->fetchAll();
 
+    if ($table === 'reservations') {
+        $rows = numbered_site_rows($rows);
+    }
+
     $singleMode = (string)($input['single_mode'] ?? '');
 
     if ($singleMode === 'single') {
@@ -746,7 +751,7 @@ function rpc_get_booked_sites(array $params): never
     );
     $statement->execute([$end->format('Y-m-d'), $start->format('Y-m-d')]);
 
-    json_response($statement->fetchAll());
+    json_response(numbered_site_rows($statement->fetchAll()));
 }
 
 function rpc_create_reservation(array $params): never
@@ -759,7 +764,7 @@ function rpc_create_reservation(array $params): never
     $people = (int)($params['p_people'] ?? 0);
     $optionTotal = (int)($params['p_option_total'] ?? 0);
     $request = normalize_text($params['p_request'] ?? '', 1000, 'INVALID_REQUEST', true);
-    $site = normalize_text($params['p_site'] ?? '', 50, 'INVALID_SITE');
+    $site = site_storage_key(normalize_text($params['p_site'] ?? '', 50, 'INVALID_SITE'));
     $start = parse_date((string)($params['p_start'] ?? ''), 'INVALID_START_DATE');
     $end = parse_date((string)($params['p_end'] ?? ''), 'INVALID_END_DATE');
     $today = new DateTimeImmutable('today');
@@ -808,15 +813,17 @@ function rpc_create_reservation(array $params): never
 
         auto_cancel_expired();
 
+        $aliases = site_aliases($site);
+        $sitePlaceholders = implode(', ', array_fill(0, count($aliases), '?'));
         $duplicate = $pdo->prepare(
             "SELECT COUNT(*)
              FROM reservations
-             WHERE site = ?
+             WHERE site IN ($sitePlaceholders)
                AND status IN ('결제대기', '예약완료')
                AND reservation_start < ?
                AND reservation_end > ?"
         );
-        $duplicate->execute([$site, $end->format('Y-m-d'), $start->format('Y-m-d')]);
+        $duplicate->execute([...$aliases, $end->format('Y-m-d'), $start->format('Y-m-d')]);
 
         if ((int)$duplicate->fetchColumn() > 0) {
             throw new ApiException('ALREADY_BOOKED', '선택하신 날짜와 구역에 이미 예약이 있습니다.', 409);
@@ -879,7 +886,7 @@ function rpc_get_reservation_receipt(array $params): never
     $statement->execute([$id]);
     $row = $statement->fetch();
 
-    json_response($row ? [$row] : []);
+    json_response(numbered_site_rows($row ? [$row] : []));
 }
 
 function rpc_find_reservations(array $params): never
@@ -898,7 +905,7 @@ function rpc_find_reservations(array $params): never
     );
     $statement->execute([$name, $phone]);
 
-    json_response($statement->fetchAll());
+    json_response(numbered_site_rows($statement->fetchAll()));
 }
 
 function rpc_cancel_waiting_reservation(array $params): never

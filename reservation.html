@@ -119,7 +119,8 @@
             transition: fill 0.2s, stroke 0.2s;
         }
 
-        .site-overlay .site-group:hover {
+        .site-overlay .site-group:hover,
+        .site-overlay .site-group:focus-visible {
             fill: rgba(113, 166, 16, 0.3);
             stroke: #71a610;
         }
@@ -136,6 +137,26 @@
             stroke-width: 4;
             cursor: not-allowed;
         }
+        .site-number-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+            gap: 8px;
+            max-width: 820px;
+            margin: 16px auto 0;
+        }
+        .site-number-button {
+            min-height: 44px;
+            border: 2px solid #71a610;
+            border-radius: 6px;
+            background: #f2f7e9;
+            color: #294221;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .site-number-button.selected { background: #f4a425; border-color: #b77715; color: #222; }
+        .site-number-button.booked { background: #f9dedb; border-color: #c0392b; color: #943027; cursor: not-allowed; }
+        .site-number-button:focus-visible { outline: 3px solid #294221; outline-offset: 2px; }
     </style>
 
     <main class="section">
@@ -196,98 +217,113 @@
 
                     <div id="interactive-site-map">
 
-                        <img src="images/sites.jpg" alt="월촌캠핑장 오토사이트 11개와 일반사이트 3개 전체 안내도">
-                        <svg class="site-overlay" viewBox="0 0 1122 1402" aria-label="예약 사이트 선택 영역">
-
-                            <!-- 오토 9 -->
-                            <polygon class="site-group" data-site="오토9" aria-label="오토9 선택"
-                                points="511,157 580,166 569,265 499,257">
-                                <title>오토9</title>
+                        <img src="sites.jpg?v=20261009" alt="월촌캠핑장 1번부터 24번까지 전체 안내도" width="2309" height="3265">
+                        <svg class="site-overlay" viewBox="0 0 1334 1888" preserveAspectRatio="none" aria-label="1번부터 24번 예약 구역 선택">
+                            <polygon class="site-group" data-site="1" role="button" tabindex="0" aria-label="1번 구역 선택" aria-pressed="false" aria-disabled="true" points="706,1279 808,1292 798,1362 698,1350">
+                                <title>1번</title>
                             </polygon>
-
-                            <!-- 오토 8 -->
-                            <polygon class="site-group" data-site="오토8" aria-label="오토8 선택"
-                                points="611,166 680,174 668,275 599,265">
-                                <title>오토8</title>
+                            <polygon class="site-group" data-site="2" role="button" tabindex="0" aria-label="2번 구역 선택" aria-pressed="false" aria-disabled="true" points="723,1163 823,1175 813,1248 714,1235">
+                                <title>2번</title>
                             </polygon>
-
-                            <!-- 오토 7 -->
-                            <polygon class="site-group" data-site="오토7" aria-label="오토7 선택"
-                                points="748,184 814,193 802,292 733,282">
-                                <title>오토7</title>
+                            <polygon class="site-group" data-site="3" role="button" tabindex="0" aria-label="3번 구역 선택" aria-pressed="false" aria-disabled="true" points="738,1035 836,1048 827,1120 730,1106">
+                                <title>3번</title>
                             </polygon>
-
-                            <!-- 일반 3 -->
-                            <polygon class="site-group" data-site="일반3" aria-label="일반3 선택"
-                                points="852,189 927,198 920,255 845,246">
-                                <title>일반3</title>
+                            <polygon class="site-group" data-site="4" role="button" tabindex="0" aria-label="4번 구역 선택" aria-pressed="false" aria-disabled="true" points="753,930 847,942 839,1009 744,997">
+                                <title>4번</title>
                             </polygon>
-
-                            <!-- 오토 10 -->
-                            <polygon class="site-group" data-site="오토10" aria-label="오토10 선택"
-                                points="339,261 443,272 437,334 333,323">
-                                <title>오토10</title>
+                            <polygon class="site-group" data-site="5" role="button" tabindex="0" aria-label="5번 구역 선택" aria-pressed="false" aria-disabled="true" points="765,837 859,850 851,918 756,905">
+                                <title>5번</title>
                             </polygon>
-
-                            <!-- 오토 11 -->
-                            <polygon class="site-group" data-site="오토11" aria-label="오토11 선택"
-                                points="465,394 568,412 558,480 455,463">
-                                <title>오토11</title>
+                            <polygon class="site-group" data-site="6" role="button" tabindex="0" aria-label="6번 구역 선택" aria-pressed="false" aria-disabled="true" points="775,755 868,768 859,837 766,824">
+                                <title>6번</title>
                             </polygon>
-
-                            <!-- 오토 6 -->
-                            <polygon class="site-group" data-site="오토6" aria-label="오토6 선택"
-                                points="650,344 767,358 760,427 642,412">
-                                <title>오토6</title>
+                            <polygon class="site-group" data-site="7" role="button" tabindex="0" aria-label="7번 구역 선택" aria-pressed="false" aria-disabled="true" points="783,673 877,686 870,755 775,743">
+                                <title>7번</title>
                             </polygon>
-
-                            <!-- 일반 2 -->
-                            <polygon class="site-group" data-site="일반2" aria-label="일반2 선택"
-                                points="832,357 918,367 911,429 825,420">
-                                <title>일반2</title>
+                            <polygon class="site-group" data-site="8" role="button" tabindex="0" aria-label="8번 구역 선택" aria-pressed="false" aria-disabled="true" points="794,587 890,600 881,671 785,657">
+                                <title>8번</title>
                             </polygon>
-
-                            <!-- 오토 5 -->
-                            <polygon class="site-group" data-site="오토5" aria-label="오토5 선택"
-                                points="635,440 752,456 744,525 627,509">
-                                <title>오토5</title>
+                            <polygon class="site-group" data-site="9" role="button" tabindex="0" aria-label="9번 구역 선택" aria-pressed="false" aria-disabled="true" points="804,503 899,516 890,585 797,572">
+                                <title>9번</title>
                             </polygon>
-
-                            <!-- 일반 1 -->
-                            <polygon class="site-group" data-site="일반1" aria-label="일반1 선택"
-                                points="822,440 907,448 902,510 816,502">
-                                <title>일반1</title>
+                            <polygon class="site-group" data-site="10" role="button" tabindex="0" aria-label="10번 구역 선택" aria-pressed="false" aria-disabled="true" points="899,693 993,707 983,780 890,766">
+                                <title>10번</title>
                             </polygon>
-
-                            <!-- 오토 4 -->
-                            <polygon class="site-group" data-site="오토4" aria-label="오토4 선택"
-                                points="622,541 736,557 727,622 612,606">
-                                <title>오토4</title>
+                            <polygon class="site-group" data-site="11" role="button" tabindex="0" aria-label="11번 구역 선택" aria-pressed="false" aria-disabled="true" points="909,606 1005,619 996,692 900,677">
+                                <title>11번</title>
                             </polygon>
-
-                            <!-- 오토 3 -->
-                            <polygon class="site-group" data-site="오토3" aria-label="오토3 선택"
-                                points="602,752 717,770 707,835 591,817">
-                                <title>오토3</title>
+                            <polygon class="site-group" data-site="12" role="button" tabindex="0" aria-label="12번 구역 선택" aria-pressed="false" aria-disabled="true" points="919,520 1016,534 1006,605 910,590">
+                                <title>12번</title>
                             </polygon>
-
-                            <!-- 오토 2 -->
-                            <polygon class="site-group" data-site="오토2" aria-label="오토2 선택"
-                                points="588,855 711,876 700,945 578,924">
-                                <title>오토2</title>
+                            <polygon class="site-group" data-site="13" role="button" tabindex="0" aria-label="13번 구역 선택" aria-pressed="false" aria-disabled="true" points="1048,549 1131,562 1123,640 1037,628">
+                                <title>13번</title>
                             </polygon>
-
-                            <!-- 오토 1 -->
-                            <polygon class="site-group" data-site="오토1" aria-label="오토1 선택"
-                                points="565,956 689,977 677,1045 554,1024">
-                                <title>오토1</title>
+                            <polygon class="site-group" data-site="14" role="button" tabindex="0" aria-label="14번 구역 선택" aria-pressed="false" aria-disabled="true" points="1057,450 1142,463 1134,544 1048,532">
+                                <title>14번</title>
                             </polygon>
-
+                            <polygon class="site-group" data-site="15" role="button" tabindex="0" aria-label="15번 구역 선택" aria-pressed="false" aria-disabled="true" points="1022,282 1095,291 1084,385 1011,373">
+                                <title>15번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="16" role="button" tabindex="0" aria-label="16번 구역 선택" aria-pressed="false" aria-disabled="true" points="893,315 971,326 957,422 880,410">
+                                <title>16번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="17" role="button" tabindex="0" aria-label="17번 구역 선택" aria-pressed="false" aria-disabled="true" points="782,295 859,305 846,405 769,393">
+                                <title>17번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="18" role="button" tabindex="0" aria-label="18번 구역 선택" aria-pressed="false" aria-disabled="true" points="675,279 753,291 740,389 662,377">
+                                <title>18번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="19" role="button" tabindex="0" aria-label="19번 구역 선택" aria-pressed="false" aria-disabled="true" points="574,266 649,276 635,373 560,362">
+                                <title>19번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="20" role="button" tabindex="0" aria-label="20번 구역 선택" aria-pressed="false" aria-disabled="true" points="417,331 505,341 497,407 410,397">
+                                <title>20번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="21" role="button" tabindex="0" aria-label="21번 구역 선택" aria-pressed="false" aria-disabled="true" points="409,411 498,422 490,488 403,478">
+                                <title>21번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="22" role="button" tabindex="0" aria-label="22번 구역 선택" aria-pressed="false" aria-disabled="true" points="549,466 623,477 613,561 539,551">
+                                <title>22번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="23" role="button" tabindex="0" aria-label="23번 구역 선택" aria-pressed="false" aria-disabled="true" points="646,481 719,492 709,575 635,564">
+                                <title>23번</title>
+                            </polygon>
+                            <polygon class="site-group" data-site="24" role="button" tabindex="0" aria-label="24번 구역 선택" aria-pressed="false" aria-disabled="true" points="634,589 707,599 696,681 623,671">
+                                <title>24번</title>
+                            </polygon>
                         </svg>
 
 
 
                     </div>
+                <p class="map-guide" style="margin-top: 20px;">아래 번호 버튼으로도 구역을 선택할 수 있습니다.</p>
+                <div class="site-number-grid" aria-label="번호로 예약 구역 선택">
+                    <button type="button" class="site-group site-number-button" data-site="1" aria-label="1번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>1</button>
+                    <button type="button" class="site-group site-number-button" data-site="2" aria-label="2번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>2</button>
+                    <button type="button" class="site-group site-number-button" data-site="3" aria-label="3번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>3</button>
+                    <button type="button" class="site-group site-number-button" data-site="4" aria-label="4번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>4</button>
+                    <button type="button" class="site-group site-number-button" data-site="5" aria-label="5번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>5</button>
+                    <button type="button" class="site-group site-number-button" data-site="6" aria-label="6번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>6</button>
+                    <button type="button" class="site-group site-number-button" data-site="7" aria-label="7번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>7</button>
+                    <button type="button" class="site-group site-number-button" data-site="8" aria-label="8번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>8</button>
+                    <button type="button" class="site-group site-number-button" data-site="9" aria-label="9번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>9</button>
+                    <button type="button" class="site-group site-number-button" data-site="10" aria-label="10번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>10</button>
+                    <button type="button" class="site-group site-number-button" data-site="11" aria-label="11번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>11</button>
+                    <button type="button" class="site-group site-number-button" data-site="12" aria-label="12번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>12</button>
+                    <button type="button" class="site-group site-number-button" data-site="13" aria-label="13번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>13</button>
+                    <button type="button" class="site-group site-number-button" data-site="14" aria-label="14번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>14</button>
+                    <button type="button" class="site-group site-number-button" data-site="15" aria-label="15번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>15</button>
+                    <button type="button" class="site-group site-number-button" data-site="16" aria-label="16번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>16</button>
+                    <button type="button" class="site-group site-number-button" data-site="17" aria-label="17번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>17</button>
+                    <button type="button" class="site-group site-number-button" data-site="18" aria-label="18번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>18</button>
+                    <button type="button" class="site-group site-number-button" data-site="19" aria-label="19번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>19</button>
+                    <button type="button" class="site-group site-number-button" data-site="20" aria-label="20번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>20</button>
+                    <button type="button" class="site-group site-number-button" data-site="21" aria-label="21번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>21</button>
+                    <button type="button" class="site-group site-number-button" data-site="22" aria-label="22번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>22</button>
+                    <button type="button" class="site-group site-number-button" data-site="23" aria-label="23번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>23</button>
+                    <button type="button" class="site-group site-number-button" data-site="24" aria-label="24번 구역 선택" aria-pressed="false" aria-disabled="true" disabled>24</button>
+                </div>
+
 
                     <p class="reservation-map-note">
                         초록색 테두리로 표시된 사이트를 누르면 선택됩니다.<br>
@@ -351,7 +387,7 @@
 
 
     <script src="js/supabase-config.js?v=20261008-maintenance"></script>
-    <script src="js/main.js?v=20261008-maintenance"></script>
+    <script src="js/main.js?v=20261009-sites"></script>
 </body>
 
 </html>

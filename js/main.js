@@ -5,6 +5,17 @@
    ========================================== */
 
 const WolchonUtils = {
+    getSiteNumber(value) {
+        const site = String(value ?? '').trim();
+        const legacy = {
+            '오토1': '1', '오토2': '2', '오토3': '3',
+            '오토4': '10', '오토5': '11', '오토6': '12',
+            '일반1': '13', '일반2': '14', '일반3': '15',
+            '오토7': '16', '오토8': '17', '오토9': '18',
+            '오토10': '21', '오토11': '24'
+        };
+        return Object.prototype.hasOwnProperty.call(legacy, site) ? legacy[site] : site;
+    },
     getClient() {
         if (!window.supabaseClient) {
             throw new Error('SERVER_API_NOT_CONFIGURED');
@@ -143,6 +154,7 @@ const WolchonUtils = {
             INVALID_START_DATE: '입실 날짜를 다시 선택해 주세요.',
             INVALID_END_DATE: '퇴실 날짜를 다시 선택해 주세요.',
             ALREADY_BOOKED: '선택하신 날짜와 구역에 이미 예약이 있습니다.',
+            INVALID_SITE: '1~24번 중 예약할 구역을 다시 선택해 주세요.',
             ADMIN_REQUIRED: '관리자 로그인이 필요합니다.',
             INVALID_CSRF: '로그인 정보가 만료되었습니다. 다시 로그인해 주세요.',
             TOO_MANY_REQUESTS: '요청이 너무 빠릅니다. 잠시 후 다시 시도해 주세요.'
@@ -1239,6 +1251,8 @@ window.FaqManager = {
 
 const ResManager = {
     params: null,
+    availabilityRequestId: 0,
+    availabilityReady: false,
 
     async init() {
         const hasReservationFeature =
@@ -1288,7 +1302,7 @@ const ResManager = {
 
         if (error) throw error;
 
-        return new Set((data || []).map(row => row.site));
+        return new Set((data || []).map(row => WolchonUtils.getSiteNumber(row.site)));
     },
 
     async handleStep1() {
@@ -1307,37 +1321,57 @@ const ResManager = {
             dateFormat: 'Y-m-d',
             locale: 'ko',
             onChange: async (dates) => {
+                const requestId = ++this.availabilityRequestId;
+                this.availabilityReady = false;
+                document.getElementById('step-map').style.display = 'none';
+                document.getElementById('step-summary').style.display = 'none';
+                document.getElementById('res-site-val').innerText = '-';
+                document.getElementById('res-date-val').innerText = '-';
+                document.getElementById('final-price').innerText = '0원';
+                document.querySelectorAll('.site-group').forEach(group => {
+                    group.classList.remove('booked', 'selected');
+                    group.setAttribute('aria-pressed', 'false');
+                    group.setAttribute('aria-disabled', 'true');
+                    if (group.tagName.toLowerCase() === 'button') group.disabled = true;
+                    group.style.pointerEvents = 'none';
+                });
                 if (dates.length !== 2) return;
 
                 const start = WolchonUtils.formatLocalDate(dates[0]);
                 const end = WolchonUtils.formatLocalDate(dates[1]);
+                if (end <= start) {
+                    alert('퇴실일은 입실일보다 이후 날짜로 선택해 주세요.');
+                    return;
+                }
                 const dateText = `${start} ~ ${end}`;
 
                 document.getElementById('res-date-val').innerText = dateText;
-
-                document.querySelectorAll('.site-group').forEach(group => {
-                    group.classList.remove('booked', 'selected');
-                    group.style.pointerEvents = 'auto';
-                });
 
                 document.getElementById('res-site-val').innerText = '-';
                 document.getElementById('step-summary').style.display = 'none';
 
                 try {
                     const bookedSites = await this.getBookedSites(start, end);
+                    if (requestId !== this.availabilityRequestId) return;
 
                     document.querySelectorAll('.site-group').forEach(group => {
-                        if (bookedSites.has(group.dataset.site)) {
+                        const booked = bookedSites.has(group.dataset.site);
+                        group.setAttribute('aria-disabled', String(booked));
+                        if (group.tagName.toLowerCase() === 'button') group.disabled = booked;
+                        group.style.pointerEvents = booked ? 'none' : 'auto';
+                        if (booked) {
                             group.classList.add('booked');
                             group.style.pointerEvents = 'none';
                         }
                     });
                 } catch (error) {
+                    if (requestId !== this.availabilityRequestId) return;
                     console.error('예약 가능 구역 조회 오류:', error);
                     alert(WolchonUtils.getFriendlyError(error));
                     return;
                 }
 
+                this.availabilityReady = true;
                 const stayPrice = WolchonUtils.getStayPrice(start, end);
                 const priceElement = document.getElementById('final-price');
 
@@ -1351,14 +1385,18 @@ const ResManager = {
         });
 
         document.querySelectorAll('.site-group').forEach(group => {
-            group.addEventListener('click', function () {
-                if (this.classList.contains('booked')) return;
+            const manager = this;
+            function selectSite() {
+                if (!manager.availabilityReady || this.classList.contains('booked')) return;
 
                 document.querySelectorAll('.site-group').forEach(item => {
-                    item.classList.remove('selected');
+                    const selected = item.dataset.site === this.dataset.site;
+                    item.classList.toggle('selected', selected);
+                    item.setAttribute('aria-pressed', String(selected));
                 });
 
                 this.classList.add('selected');
+                this.setAttribute('aria-pressed', 'true');
                 document.getElementById('res-site-val').innerText = this.dataset.site;
                 document.getElementById('step-summary').style.display = 'block';
 
@@ -1368,11 +1406,24 @@ const ResManager = {
                         block: 'center'
                     });
                 }, 200);
+            }
+            group.addEventListener('click', selectSite);
+            group.addEventListener('keydown', function (event) {
+                if (this.tagName.toLowerCase() === 'button') return;
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    selectSite.call(this);
+                }
             });
         });
 
         document.getElementById('btn-next-step')?.addEventListener('click', (event) => {
             event.preventDefault();
+
+            if (!this.availabilityReady) {
+                alert('날짜를 선택하고 예약 가능한 구역을 확인해 주세요.');
+                return;
+            }
 
             const date = document.getElementById('res-date-val')?.innerText || '';
             const site = document.getElementById('res-site-val')?.innerText || '-';
@@ -1407,7 +1458,7 @@ const ResManager = {
         });
 
         const dateRange = WolchonUtils.parseDateRange(this.getParam('date'));
-        const site = this.getParam('site');
+        const site = WolchonUtils.getSiteNumber(this.getParam('site'));
 
         if (!dateRange || !site) {
             alert('예약 날짜와 구역 정보가 없습니다. 다시 선택해 주세요.');
@@ -1587,7 +1638,7 @@ const ResManager = {
         }
 
         if (siteElement) {
-            siteElement.innerText = this.getParam('site') || '선택 없음';
+            siteElement.innerText = WolchonUtils.getSiteNumber(this.getParam('site')) || '선택 없음';
         }
     },
 
