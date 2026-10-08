@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex">
     <title>페이지 점검중입니다 | 월촌캠핑장</title>
     <link rel="stylesheet" href="css/maintenance.css">
-    <script src="js/maintenance.js?v=20261008-1" defer></script>
+    <script src="js/maintenance.js?v=20261009-1" defer></script>
 </head>
 <body class="maintenance-active">
     <main id="maintenance-screen" class="maintenance-screen" role="status" aria-live="polite">
@@ -22,7 +22,6 @@
                 ) . ' (한국 시간)' : '종료 시간은 확인 중입니다.';
             ?></p>
             <p>점검 상황에 따라 종료 시간이 달라질 수 있습니다.</p>
-            <a href="admin_login.html">관리자 로그인</a>
         </div>
     </main>
 </body>

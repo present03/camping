@@ -16,7 +16,7 @@
             screen.className = 'maintenance-screen';
             screen.setAttribute('role', 'status');
             screen.setAttribute('aria-live', 'polite');
-            screen.innerHTML = '<div class="maintenance-card"><p class="maintenance-brand">월촌캠핑장</p><h1></h1><p class="maintenance-description"></p><p id="maintenance-end"></p><p>점검 상황에 따라 종료 시간이 달라질 수 있습니다.</p><a href="admin_login.html">관리자 로그인</a></div>';
+            screen.innerHTML = '<div class="maintenance-card"><p class="maintenance-brand">월촌캠핑장</p><h1></h1><p class="maintenance-description"></p><p id="maintenance-end"></p><p>점검 상황에 따라 종료 시간이 달라질 수 있습니다.</p></div>';
             document.body.append(screen);
         }
         document.body.classList.add('maintenance-active');
