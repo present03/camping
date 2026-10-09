@@ -54,42 +54,18 @@
             }
         }
 
-        .site-info-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 40px;
-            align-items: start;
-        }
-
-        .site-spec {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid #eee;
-        }
-
-        .site-spec table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .site-spec th,
-        .site-spec td {
-            padding: 12px 0;
-            border-bottom: 1px solid #f5f5f5;
-            text-align: left;
-        }
-
-        .site-spec th {
-            width: 100px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        @media (max-width: 900px) {
-            .site-info-grid {
-                grid-template-columns: 1fr;
-            }
+        .tab-menu { flex-wrap: wrap; }
+        .tab-btn:focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
+        .site-sizes { max-width: 760px; margin: 0 auto; }
+        .site-sizes table { width: 100%; border-collapse: collapse; background: var(--white); }
+        .site-sizes caption { padding: 0 0 20px; font-size: 1.3rem; font-weight: 600; color: var(--primary); }
+        .site-sizes th, .site-sizes td { padding: 14px 16px; text-align: center; border-bottom: 1px solid #e5e8e1; }
+        .site-sizes thead { background: var(--primary); color: var(--white); }
+        .site-sizes tbody tr:nth-child(even) { background: #f0f4eb; }
+        .site-sizes tbody th { font-weight: 500; }
+        @media (max-width: 480px) {
+            .tab-btn { padding: 12px 20px; }
+            .site-sizes th, .site-sizes td { padding: 12px 10px; }
         }
     </style>
     <link rel="stylesheet" href="css/maintenance.css">
@@ -170,10 +146,15 @@
 
             <div class="section-title">
                 <h2>Camping Sites</h2>
-                <p>월촌캠핑장의 사이트 위치와 종류를 확인해 보세요.</p>
+                <p>월촌캠핑장의 사이트 위치와 크기를 확인해 보세요.</p>
                 <div class="line"></div>
             </div>
 
+            <div class="tab-menu" role="tablist" aria-label="사이트 안내">
+                <button type="button" class="tab-btn active" id="map-tab" role="tab" aria-selected="true" aria-controls="map-panel" data-tab="map-panel">전체 배치도</button>
+                <button type="button" class="tab-btn" id="sizes-tab" role="tab" aria-selected="false" aria-controls="sizes-panel" data-tab="sizes-panel" tabindex="-1">사이트별 크기</button>
+            </div>
+            <div id="map-panel" class="tab-content active" role="tabpanel" aria-labelledby="map-tab" tabindex="0">
             <div style="max-width: 1000px; margin: 0 auto; padding: 15px; background: #f8f8f5; border: 1px solid #eeeeea; border-radius: 15px; text-align: center;">
                 <a href="images/sites.jpg?v=20261009-2" target="_blank" rel="noopener" style="display: block; line-height: 0;">
                     <img src="images/sites.jpg?v=20261009-2" alt="월촌캠핑장 1번부터 24번까지 전체 구역 안내도" width="2309" height="3265" style="display: block; width: 100%; height: auto; border-radius: 10px;">
@@ -183,6 +164,39 @@
                 캠핑 구역은 총 24개이며, 1번부터 24번까지 번호로 구분합니다.<br>
                 안내도를 누르면 원본 크기로 크게 확인할 수 있습니다. 별표는 콘센트 위치입니다.
             </p>
+            </div>
+            <div id="sizes-panel" class="tab-content site-sizes" role="tabpanel" aria-labelledby="sizes-tab" tabindex="0" hidden>
+                <table>
+                    <caption>사이트별 크기 안내</caption>
+                    <thead><tr><th scope="col">사이트 번호</th><th scope="col">크기 (m)</th></tr></thead>
+                    <tbody>
+                        <tr><th scope="row">1번</th><td>8 × 10</td></tr>
+                        <tr><th scope="row">2번</th><td>8 × 10</td></tr>
+                        <tr><th scope="row">3번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">4번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">5번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">6번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">7번</th><td>11 × 12</td></tr>
+                        <tr><th scope="row">8번</th><td>8 × 7</td></tr>
+                        <tr><th scope="row">9번</th><td>8 × 7</td></tr>
+                        <tr><th scope="row">10번</th><td>8 × 9</td></tr>
+                        <tr><th scope="row">11번</th><td>8 × 9</td></tr>
+                        <tr><th scope="row">12번</th><td>8 × 9</td></tr>
+                        <tr><th scope="row">13번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">14번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">15번</th><td>11 × 12</td></tr>
+                        <tr><th scope="row">16번</th><td>7.5 × 10</td></tr>
+                        <tr><th scope="row">17번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">18번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">19번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">20번</th><td>11 × 15</td></tr>
+                        <tr><th scope="row">21번</th><td>8 × 11</td></tr>
+                        <tr><th scope="row">22번</th><td>8 × 9</td></tr>
+                        <tr><th scope="row">23번</th><td>8 × 9</td></tr>
+                        <tr><th scope="row">24번</th><td>8 × 10</td></tr>
+                    </tbody>
+                </table>
+            </div>
             <p style="margin-top: 24px; text-align: center;">
                 <a href="reservation.html" class="btn btn-primary">날짜 선택하고 예약하기</a>
             </p>
@@ -216,6 +230,36 @@
 
 
     <script src="js/main.js?v=20261009-sites"></script>
+    <script>
+        (() => {
+            const tabs = [...document.querySelectorAll('[role="tab"]')];
+            function activate(tab) {
+                tabs.forEach(item => {
+                    const selected = item === tab;
+                    item.classList.toggle('active', selected);
+                    item.setAttribute('aria-selected', String(selected));
+                    item.tabIndex = selected ? 0 : -1;
+                    const panel = document.getElementById(item.getAttribute('aria-controls'));
+                    panel.hidden = !selected;
+                    panel.classList.toggle('active', selected);
+                });
+            }
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => activate(tab));
+                tab.addEventListener('keydown', event => {
+                    let next;
+                    if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+                    else if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
+                    else if (event.key === 'Home') next = 0;
+                    else if (event.key === 'End') next = tabs.length - 1;
+                    else return;
+                    event.preventDefault();
+                    activate(tabs[next]);
+                    tabs[next].focus();
+                });
+            });
+        })();
+    </script>
 </body>
 
 </html>
